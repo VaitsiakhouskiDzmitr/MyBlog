@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
 
 def hello(request):
-    return HttpResponse('<h1>blog</h1>')
+    n = 'Dima'
+    return render(request, 'blog/index.html', context={'name' : n})
 
 # Create your views here.
