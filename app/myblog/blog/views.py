@@ -4,15 +4,12 @@ from django.shortcuts import get_object_or_404
 from .models import Post
 from django.views.generic import View
 from .forms import PostForm
-
-
+from .utils import *
 
 
 def posts_list(request):
     posts = Post.objects.all()
     return render(request, 'blog/index.html', context={'posts' : posts})
-
-
 
 class PostDetail(View):
     def get(self, request, slug):
@@ -30,6 +27,11 @@ class PostCreate(View):
             new_post = bound_form.save()
             return redirect(new_post)
         return render(request, 'blog/post_create_form.html', context={'form': bound_form})
+
+class PostUpdate(ObjectUpdateMixin, View):
+    model = Post
+    model_form = PostForm
+    template = 'blog/post_update_form.html'
 
 
 
