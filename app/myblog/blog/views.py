@@ -13,10 +13,13 @@ def posts_list(request):
     posts = Post.objects.all()
     return render(request, 'blog/index.html', context={'posts' : posts})
 
-class PostDetail(View):
-    def get(self, request, slug):
+class PostDetail(ObjectDetailMixin, View):
+    model = Post
+    template = 'blog/post_detail.html'
+
+    '''def get(self, request, slug):
         post = get_object_or_404(Post, slug__iexact=slug)
-        return render(request, 'blog/post_detail.html', context={'post' : post})
+        return render(request, 'blog/post_detail.html', context={'post' : post})'''
 
 class PostCreate(View):
     def get(self, request):
