@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
+
 from .models import Post
 from django.views.generic import View
 from .forms import PostForm
@@ -33,6 +35,10 @@ class PostUpdate(ObjectUpdateMixin, View):
     model_form = PostForm
     template = 'blog/post_update_form.html'
 
+class PostDelete(ObjectDeleteMixin, View):
+    model = Post
+    template = 'blog/post_delete_url.html'
+    redirect_url = 'posts_list_url'
 
 
 
