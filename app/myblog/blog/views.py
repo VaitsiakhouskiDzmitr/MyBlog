@@ -8,6 +8,8 @@ from django.views.generic import View
 from .forms import PostForm
 from .utils import *
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def posts_list(request):
     posts = Post.objects.all()
@@ -21,7 +23,7 @@ class PostDetail(ObjectDetailMixin, View):
         post = get_object_or_404(Post, slug__iexact=slug)
         return render(request, 'blog/post_detail.html', context={'post' : post})'''
 
-class PostCreate(View):
+class PostCreate(LoginRequiredMixin, View):
     def get(self, request):
         form = PostForm()
         return render(request, 'blog/post_create_form.html', context={'form': form})
@@ -32,17 +34,19 @@ class PostCreate(View):
             new_post = bound_form.save()
             return redirect(new_post)
         return render(request, 'blog/post_create_form.html', context={'form': bound_form})
+    raise_exception = True
 
-class PostUpdate(ObjectUpdateMixin, View):
+class PostUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Post
     model_form = PostForm
     template = 'blog/post_update_form.html'
+    raise_exception = True
 
-class PostDelete(ObjectDeleteMixin, View):
+class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Post
     template = 'blog/post_delete_url.html'
     redirect_url = 'posts_list_url'
-
+    raise_exception = True
 
 
 # Create your views here.
