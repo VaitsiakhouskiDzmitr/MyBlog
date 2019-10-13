@@ -33,4 +33,7 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+    class Meta:
+        ordering = ['-date_pub']
+
 # Create your models here.

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
+  {% for post in page.object_list %}
     <div class="card mt-5">
       <div class="card-header">
         {{post.date_pub}}
